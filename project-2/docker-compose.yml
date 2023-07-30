@@ -1,0 +1,38 @@
+version: "3"
+
+networks:
+  monitoring:
+    driver: bridge
+
+services:
+  prometheus:
+    image: quay.io/prometheus/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - $PWD/prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+  server:
+    build: .
+    ports:
+      - "8080:8080"
+      - "9000:9000"
+    networks:
+      - monitoring
+  grafana:
+    image: grafana/grafana-enterprise
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - '$PWD/grafana-data:/var/lib/grafana'
+      - '$PWD/grafana.ini:/etc/grafana/grafana.ini'
+    user: '0'
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    networks:
+      - monitoring
+
