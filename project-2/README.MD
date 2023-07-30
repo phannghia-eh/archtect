@@ -16,4 +16,4 @@ time service finish handle request by time.
 ## Service
 - trigger 200 status code request: `http://localhost:8080/`
 - trigger 404 status code request: `http://localhost:8080/abc` or any endpoint except root `/`
-
+Just trigger those endpoint for mocking traffics
