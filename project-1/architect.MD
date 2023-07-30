@@ -1,5 +1,5 @@
 # Problem 1 - Design
-<img src="./architect.png">
+<img src="architect.png">
 
 ## Backend
 For backend cluster management, I choose EKS as AWS managed service that run K8s or just self-host
